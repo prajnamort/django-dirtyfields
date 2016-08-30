@@ -47,7 +47,9 @@ class DirtyFieldsMixin(object):
             if is_deferred(self, field):
                 continue
 
-            field_value = getattr(self, field.attname)
+            # Use pre_save() calculated value.
+            field_value = field.pre_save(self, False)
+            #field_value = getattr(self, field.attname)
 
             # If current field value is an expression, we are not evaluating it
             if is_db_expression(field_value):
