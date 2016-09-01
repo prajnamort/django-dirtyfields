@@ -47,13 +47,15 @@ class DirtyFieldsMixin(object):
             if is_deferred(self, field):
                 continue
 
+            # luoguancheng
             # Use pre_save() calculated value.
             field_value = field.pre_save(self, False)
             #field_value = getattr(self, field.attname)
 
+            # luoguancheng
             # If current field value is an expression, we are not evaluating it
-            if is_db_expression(field_value):
-                continue
+            # if is_db_expression(field_value):
+            #     continue
 
             try:
                 # Store the converted value for fields with conversion
