@@ -84,8 +84,8 @@ class TestM2MModelWithCustomPKOnM2M(DirtyFieldsMixin, models.Model):
 
 
 class TestModelWithPreSaveSignal(DirtyFieldsMixin, models.Model):
-    data = models.CharField(max_length=10)
-    data_updated_on_presave = models.CharField(max_length=10, blank=True, null=True)
+    data = models.CharField(max_length=255)
+    data_updated_on_presave = models.CharField(max_length=255, blank=True, null=True)
 
     @staticmethod
     def pre_save(instance, *args, **kwargs):
@@ -101,3 +101,8 @@ pre_save.connect(TestModelWithPreSaveSignal.pre_save, sender=TestModelWithPreSav
 class TestModelWithoutM2MCheck(DirtyFieldsMixin, models.Model):
     characters = models.CharField(blank=True, max_length=80)
     ENABLE_M2M_CHECK = False
+
+
+class TestDoubleForeignKeyModel(DirtyFieldsMixin, models.Model):
+    fkey1 = models.ForeignKey(TestModel)
+    fkey2 = models.ForeignKey(TestModel, null=True, related_name='fkey2')
